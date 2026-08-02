@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargando Lista IPTV...</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; background: #121212; color: white; }
+        .btn { background: #00E676; color: black; padding: 15px 25px; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>Tu lista IPTV está lista</h2>
+    <p>Haz clic abajo para copiar la URL y luego pégala en IPTV Pro.</p>
+    <button class="btn" onclick="copiarYAbrir()">COPIAR URL Y ABRIR APP</button>
+
+    <script>
+    function copiarYAbrir() {
+        const urlLista = "https://pastebin.com/raw/R12yUeX2";
+        
+        // Copiar al portapapeles
+        navigator.clipboard.writeText(urlLista).then(() => {
+            alert("¡Enlace copiado! Ahora pégalo en tu app IPTV Pro.");
+            // Intenta abrir la app automáticamente tras copiar
+            window.location.href = "intent://playlist?url=" + urlLista + "#Intent;scheme=iptv;package=ru.iptvremote.android.iptv.pro;end";
+        }).catch(err => {
+            // Alternativa si el navegador bloquea el copiado directo
+            const el = document.createElement('textarea');
+            el.value = urlLista;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            alert("¡Enlace copiado! Abre IPTV Pro y pégalo.");
+            window.location.href = "intent://playlist?url=" + urlLista + "#Intent;scheme=iptv;package=ru.iptvremote.android.iptv.pro;end";
+        });
+    }
+    </script>
+</body>
+</html>
