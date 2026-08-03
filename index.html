@@ -3,70 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cargar Lista IPTV Pro</title>
+    <title>Cargando Lista IPTV...</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-            text-align: center;
-        }
-        .container {
-            max-width: 400px;
-            padding: 30px;
-            background: #1e1e1e;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-        h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: #00E676;
-        }
-        p {
-            font-size: 14px;
-            color: #aaaaaa;
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
-        .btn-iptv {
-            display: inline-block;
-            width: 100%;
-            padding: 16px;
-            background-color: #00E676;
-            color: #000000;
-            font-size: 16px;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 8px;
-            box-sizing: border-box;
-            transition: background 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 230, 118, 0.3);
-        }
-        .btn-iptv:active {
-            background-color: #00B55E;
-        }
+        body { font-family: sans-serif; text-align: center; padding: 50px; background: #121212; color: white; }
+        .btn { background: #00E676; color: black; padding: 15px 25px; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
+    <h2>Tu lista IPTV está lista</h2>
+    <p>Haz clic abajo para copiar la URL y luego pégala en IPTV Pro.</p>
+    <button class="btn" onclick="copiarYAbrir()">COPIAR URL Y ABRIR APP</button>
 
-    <div class="container">
-        <h1>Tu Lista IPTV</h1>
-        <p>Pulsa el botón de abajo para importar de forma automática los canales directamente en tu aplicación modificada.</p>
+    <script>
+    function copiarYAbrir() {
+        const urlLista = "https://pastebin.com/raw/R12yUeX2";
         
-        <!-- Aquí están integrados tus datos exactos de paquete y actividad -->
-        <a href="intent://playlist?url=https://pastebin.com/raw/R12yUeX2" class="btn-iptv">
-            ABRIR DIRECTO EN IPTV PRO
-        </a>
-    </div>
-
+        // Copiar al portapapeles
+        navigator.clipboard.writeText(urlLista).then(() => {
+            alert("¡Enlace copiado! Ahora pégalo en tu app IPTV Pro.");
+            // Intenta abrir la app automáticamente tras copiar
+            window.location.href = "intent://playlist?url=" + urlLista + "#Intent;scheme=iptv;package=ru.iptvremote.android.iptv.pro;end";
+        }).catch(err => {
+            // Alternativa si el navegador bloquea el copiado directo
+            const el = document.createElement('textarea');
+            el.value = urlLista;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            alert("¡Enlace copiado! Abre IPTV Pro y pégalo.");
+            window.location.href = "intent://playlist?url=" + urlLista + "#Intent;scheme=iptv;package=ru.iptvremote.android.iptv.pro;end";
+        });
+    }
+    </script>
 </body>
 </html>
